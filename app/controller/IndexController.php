@@ -38,7 +38,7 @@ class IndexController
             $stmt->bindValue('post_id', $data['post_id']);
             $stmt->bindValue('content', $data['content']);
             $stmt->execute();
-            header('Location: ' . App::config('url').'Index/view/' . $data['post_id']);
+            header('Location: ' . App::config('url').'/Index/view/' . $data['post_id']);
         }
     }
 
