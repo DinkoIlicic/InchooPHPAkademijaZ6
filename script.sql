@@ -4,8 +4,15 @@ use social_network;
 
 create table post(
 id int not null primary key auto_increment,
-content text
+content text,
+image text,
+post_created VARCHAR(30)
+)engine=InnoDB;
 
+create table comment(
+id int not null primary key auto_increment,
+post_id int, FOREIGN KEY (post_id) REFERENCES post(id),
+content text
 )engine=InnoDB;
 
 insert into post(content) values
