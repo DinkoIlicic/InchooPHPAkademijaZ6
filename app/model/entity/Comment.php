@@ -38,22 +38,12 @@ class Comment
         $this->setContent($content);
     }
 
-    public static function find($id)
-    {
-        $id = (int) $id;
-        $db = Db::connect();
-        $statement = $db->prepare('select * from comment where id = :id');
-        $statement->bindValue('id', $id);
-        $statement->execute();
-        $post = $statement->fetch();
-        return new Post($post->id, $post->content, $post->image, $post->post_created);
-    }
 
     public static function all($post_id)
     {
         $list = [];
         $db = Db::connect();
-        $statement = $db->prepare('select * from comment WHERE post_id= ' . $post_id . 'ORDER BY id desc ');
+        $statement = $db->prepare('select * from comment WHERE post_id= ' . $post_id . ' ORDER BY id desc ');
         $statement->execute();
         foreach ($statement->fetchAll() as $comment){
             $list[] = new Comment($comment->id, $comment->post_id, $comment->content);

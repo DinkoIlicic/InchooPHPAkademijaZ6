@@ -38,7 +38,7 @@ class IndexController
             $stmt->bindValue('post_id', $data['post_id']);
             $stmt->bindValue('content', $data['content']);
             $stmt->execute();
-            header('Location: ' . App::config('url').'Index/view' . $data['post_id']);
+            header('Location: ' . App::config('url').'Index/view/' . $data['post_id']);
         }
     }
 
@@ -60,8 +60,11 @@ class IndexController
     public function view($id)
     {
         $view = new View();
+        $post_id = Post::find($id);
+        $comments = Comment::all($id);
         $view->render('view', [
-            'post' => Post::find($id)
+            'post' => $post_id,
+            'comments' => $comments
         ]);
     }
 }
