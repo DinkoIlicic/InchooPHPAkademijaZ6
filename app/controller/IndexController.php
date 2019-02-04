@@ -14,13 +14,32 @@ class IndexController
     public function newPost()
     {
         $data = $this->validate($_POST);
+        $imageName = NULL;
+        $uploadDir = App::config('imageurl');
+        $allowedExt = ['jpg', 'jpeg'];
         if($data === false) {
             header('Location: ' . App::config('url'));
         } else {
+            if($_FILES['imagefile']['type'] != NULL) {
+                $imageName = rand(1000000,9999999) . basename($_FILES['imagefile']['name']);
+                $uploadImage = $uploadDir . $imageName;
+                $extansion = pathinfo($imageName, PATHINFO_EXTENSION);
+                if(!in_array($extansion, $allowedExt)) {
+                    echo 'File must be .jpg or .jpeg';
+                    exit();
+                } elseif (move_uploaded_file($_FILES["imagefile"]["tmp_name"], $uploadImage)) {
+                    echo 'File uploaded';
+                } else {
+                    echo 'Upload failed';
+                    exit();
+                }
+            }
+
             $connection = Db::connect();
-            $sql = 'insert into post (content) values (:content)';
+            $sql = 'insert into post (content, image) values (:content, :image)';
             $stmt = $connection->prepare($sql);
             $stmt->bindValue('content', $data['content']);
+            $stmt->bindValue('image', $imageName);
             $stmt->execute();
             header('Location: ' . App::config('url'));
         }

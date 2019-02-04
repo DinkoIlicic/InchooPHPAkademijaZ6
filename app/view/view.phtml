@@ -1,34 +1,55 @@
-<div>
-    <p>
-        <?php
-        echo $post->getContent();?>
-    </p>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="../../css/skeleton.css" type="text/css">
+    <link rel="stylesheet" href="../../css/myown.css" type="text/css">
+</head>
+<body>
     <div>
-        <?php
-        foreach ($comments as $comment)
-        echo '<p>' . $comment->getContent() . '</p>'?>
+        <p>
+            <?php
+            echo $post->getContent();?>
+        </p>
+        <?php if($post->getImage()):?>
+            <p>
+                <img class='images' src="<?php echo App::config('url') . '/images/' . $post->getImage(); ?>" alt="image">
+            </p><?php
+        endif;?>
+        <div>
+            <h5>Comments: </h5>
+            <?php
+            foreach ($comments as $comment)
+                echo '<p class="bordered">' . $comment->getContent() . '</p>'?>
+        </div>
     </div>
-</div>
 
-<div>
-    <form method="post" action="<?= App::config('url') ?>/Index/newComment">
+    <div>
+        <form method="post" action="<?= App::config('url') ?>/Index/newComment">
 
-        <div class="form-group">
-            <label for="content">Share Your thoughts about the Topic: </label>
-            <input id="content" name="content" type="text">
-            <input id="post_id" name="post_id" type="hidden" value="<?= $post->getId(); ?>">
-        </div>
+            <div class="form-group">
+                <label for="content">Share Your thoughts about the Topic: </label>
+                <input id="content" name="content" type="text">
+                <input id="post_id" name="post_id" type="hidden" value="<?= $post->getId(); ?>">
+            </div>
 
-        <button type="submit">Comment</button>
-    </form>
-    <hr />
-</div>
+            <button type="submit">Comment</button>
+        </form>
+        <hr />
+    </div>
 
-<div>
-    <form method="post" action="<?= App::config('url') ?>/Index/deletePost">
-        <div class="form-group">
-            <input id="post_id" name="post_id" type="hidden" value="<?= $post->getId(); ?>">
-            <button type="submit">Delete Post</button>
-        </div>
-    </form>
-</div>
+    <div>
+        <form method="post" action="<?= App::config('url') ?>/Index/deletePost">
+            <div class="form-group">
+                <input id="post_id" name="post_id" type="hidden" value="<?= $post->getId(); ?>">
+                <button type="submit">Delete Post</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
