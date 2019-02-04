@@ -16,13 +16,29 @@ class IndexController
         $data = $this->validate($_POST);
         if($data === false) {
             header('Location: ' . App::config('url'));
-        }else{
+        } else {
             $connection = Db::connect();
             $sql = 'insert into post (content) values (:content)';
             $stmt = $connection->prepare($sql);
             $stmt->bindValue('content', $data['content']);
             $stmt->execute();
             header('Location: ' . App::config('url'));
+        }
+    }
+
+    public function newComment()
+    {
+        $data = $this->validate($_POST);
+        if($data === false) {
+            header('Location: ' . App::config('url'));
+        } else {
+            $connection = Db::connect();
+            $sql = 'insert into comment (post_id, content) values (:post_id, :content)';
+            $stmt = $connection->prepare($sql);
+            $stmt->bindValue('post_id', $data['post_id']);
+            $stmt->bindValue('content', $data['content']);
+            $stmt->execute();
+            header('Location: ' . App::config('url').'Index/view' . $data['post_id']);
         }
     }
 

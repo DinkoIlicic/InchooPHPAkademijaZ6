@@ -18,6 +18,11 @@
         </p>
         <p>
             <?php echo 'Post created: ' . date('d.m.Y. H.i', strtotime($post->getPost_created())); ?>
+        </p>
+        <p>
+            <?php echo 'Comments (';
+            echo ($post->getComment_count() > 0 ? $post->getComment_count() : 0);
+            echo ')'; ?>
         </p><hr>
 
     <?php endforeach; ?>
