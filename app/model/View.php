@@ -25,7 +25,7 @@ class View
 
         if($this->layout){
             include BP . "app/view/{$this->layout}.phtml";
-        }else{
+        } else {
             echo $content;
         }
         return $this;

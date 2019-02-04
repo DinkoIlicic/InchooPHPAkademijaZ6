@@ -11,7 +11,13 @@
     <?php
     foreach ($posts as $post):
         ?>
-        <p><a href="<?php echo App::config('url') ?>/Index/view/<?= $post->getId() ?>">
-            <?php echo $post->getContent(); ?>   </a></p>
+        <p>
+            <a href="<?php echo App::config('url') ?>/Index/view/<?= $post->getId() ?>">
+                <?php echo $post->getContent(); ?>
+            </a>
+        </p>
+        <p>
+            <?php echo 'Post created: ' . date('d.m.Y. H.i', strtotime($post->getPost_created())); ?>
+        </p><hr>
 
     <?php endforeach; ?>
