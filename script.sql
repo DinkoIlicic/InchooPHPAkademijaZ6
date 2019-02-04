@@ -6,7 +6,7 @@ create table post(
 id int not null primary key auto_increment,
 content text,
 image text,
-post_created VARCHAR(30)
+post_created timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )engine=InnoDB;
 
 create table comment(
