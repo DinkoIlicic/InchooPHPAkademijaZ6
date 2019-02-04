@@ -42,6 +42,40 @@ class IndexController
         }
     }
 
+    public function deletePost()
+    {
+        $data = $this->validateId($_POST);
+        if($data === false) {
+            header('Location: ' . App::config('url'));
+        } else {
+            $db = Db::connect();
+            $statementComment = $db->prepare('delete from comment where post_id = :post_id');
+            $statementComment->bindValue('post_id', $data['post_id']);
+            $statementComment->execute();
+
+            $statement = $db->prepare('delete from post where id = :id');
+            $statement->bindValue('id', $data['post_id']);
+            $statement->execute();
+
+            header('Location: ' . App::config('url'));
+        }
+    }
+
+    private function validateId($data)
+    {
+        $required = ['post_id'];
+        foreach ($required as $key){
+            if(!isset($data[$key])){
+                return false;
+            }
+            $data[$key] = trim((int)$data[$key]);
+            if(empty($data[$key])){
+                return false;
+            }
+        }
+        return $data;
+    }
+
     private function validate($data)
     {
         $required = ['content'];

@@ -13,12 +13,22 @@
 <div>
     <form method="post" action="<?= App::config('url') ?>/Index/newComment">
 
-        <div class="form-group" id="comment_form">
+        <div class="form-group">
             <label for="content">Share Your thoughts about the Topic: </label>
             <input id="content" name="content" type="text">
             <input id="post_id" name="post_id" type="hidden" value="<?= $post->getId(); ?>">
         </div>
 
         <button type="submit">Comment</button>
+    </form>
+    <hr />
+</div>
+
+<div>
+    <form method="post" action="<?= App::config('url') ?>/Index/deletePost">
+        <div class="form-group">
+            <input id="post_id" name="post_id" type="hidden" value="<?= $post->getId(); ?>">
+            <button type="submit">Delete Post</button>
+        </div>
     </form>
 </div>
