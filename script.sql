@@ -17,4 +17,4 @@ content text
 
 insert into post(content) values
 ('Danas je opet padao snijeg.'),
-('Jedem jagode.');
+('Jedem banane.');

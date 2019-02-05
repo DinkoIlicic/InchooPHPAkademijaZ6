@@ -21,7 +21,8 @@ class IndexController
             header('Location: ' . App::config('url'));
         } else {
             if($_FILES['imagefile']['type'] != NULL) {
-                $imageName = rand(1000000,9999999) . basename($_FILES['imagefile']['name']);
+                $imageName = rand(1000000,9999999) . htmlspecialchars(basename($_FILES['imagefile']['name']));
+                $imageName = str_replace(' ', '_', $imageName);
                 $uploadImage = $uploadDir . $imageName;
                 $extansion = pathinfo($imageName, PATHINFO_EXTENSION);
                 if(!in_array($extansion, $allowedExt)) {
@@ -69,11 +70,11 @@ class IndexController
         } else {
             $db = Db::connect();
             $statementComment = $db->prepare('delete from comment where post_id = :post_id');
-            $statementComment->bindValue('post_id', $data['post_id']);
+            $statementComment->bindValue('post_id', $data['id']);
             $statementComment->execute();
 
             $statement = $db->prepare('delete from post where id = :id');
-            $statement->bindValue('id', $data['post_id']);
+            $statement->bindValue('id', $data['id']);
             $statement->execute();
 
             header('Location: ' . App::config('url'));
@@ -82,7 +83,7 @@ class IndexController
 
     private function validateId($data)
     {
-        $required = ['post_id'];
+        $required = ['id'];
         foreach ($required as $key){
             if(!isset($data[$key])){
                 return false;

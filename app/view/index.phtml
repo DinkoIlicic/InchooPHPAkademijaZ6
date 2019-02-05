@@ -1,55 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../css/normalize.css" type="text/css">
-    <link rel="stylesheet" href="../../css/skeleton.css" type="text/css">
-    <link rel="stylesheet" href="../../css/myown.css" type="text/css">
-</head>
-<body>
-    <div class="container">
-        <h2>Welcome to my Page You beautiful people</h2>
-        <form method="post" action="<?= App::config('url') ?>/Index/newPost" enctype="multipart/form-data">
-
-            <div class="form-group">
-                <label for="content">What's on your mind?</label>
-                <input id="content" name="content" type="text">
-                <label for="imagefile">Choose image: </label>
-                <input id="imagefile" name="imagefile" type="file" />
-            </div>
-
-            <button class="button button-primary" type="submit">Save</button>
-        </form>
-
-        <div>
-            <?php
-            foreach ($posts as $post):
-                ?>
-                <p>
-                    <a href="<?php echo App::config('url') ?>/Index/view/<?= $post->getId() ?>">
-                        <?php echo $post->getContent(); ?>
-                    </a>
-                </p>
-                <?php if($post->getImage()):?>
-                    <p>
-                        <img class='images' src="<?php echo App::config('url') . '/images/' . $post->getImage(); ?>" alt="image">
-                    </p><?php
-                endif;?>
-                <p>
-                    <?php echo 'Post created: ' . date('d.m.Y. H.i', strtotime($post->getPost_created())); ?>
-                </p>
-                <p>
-                    <?php echo 'Comments (';
-                    echo ($post->getComment_count() > 0 ? $post->getComment_count() : 0);
-                    echo ')'; ?>
-                </p><hr>
-
-            <?php endforeach; ?>
-        </div>
+<h2>Welcome to my Page You beautiful people</h2>
+<form method="post" action="<?= App::config('url') ?>/Index/newPost" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="content">What's on your mind?</label>
+        <input id="content" name="content" type="text">
+        <label for="imagefile">Choose image: </label>
+        <input id="imagefile" name="imagefile" type="file" />
     </div>
-</body>
-</html>
+    <button class="button button-primary" type="submit">Save</button>
+</form>
+<div>
+    <?php
+    foreach ($posts as $post):
+        ?>
+        <p>
+            <a href="<?php echo App::config('url') ?>/Index/view/<?= $post->getId() ?>">
+                <?php echo $post->getContent(); ?>
+            </a>
+        </p>
+        <?php if($post->getImage()):?>
+        <p>
+        <img class='images' src="<?php echo App::config('url') . '/images/' . $post->getImage(); ?>" alt="image">
+        </p><?php
+    endif;?>
+        <p>
+            <?php echo 'Post created: ' . date('d.m.Y. H:i', strtotime($post->getPost_created())); ?>
+        </p>
+        <p>
+            <?php echo 'Comments (';
+            echo ($post->getComment_count() > 0 ? $post->getComment_count() : 0);
+            echo ')'; ?>
+        </p><hr>
+    <?php endforeach; ?>
+</div>
+
