@@ -1,18 +1,18 @@
 <div>
     <p>
         <?php
-        echo $post->getContent();?>
+        echo htmlspecialchars($post->getContent());?>
     </p>
     <?php if($post->getImage()):?>
         <p>
-        <img class='images' src="<?php echo App::config('url') . '/images/' . $post->getImage(); ?>" alt="image">
+        <img class='images' src="<?php echo htmlspecialchars(App::config('url') . '/images/' . $post->getImage()); ?>" alt="image">
         </p><?php
     endif;?>
     <div>
         <h5>Comments: </h5>
         <?php
         foreach ($comments as $comment)
-            echo '<p class="bordered">' . $comment->getContent() . '</p>'?>
+            echo '<p class="bordered">' . htmlspecialchars($comment->getContent()) . '</p>'?>
     </div>
 </div>
 <div>

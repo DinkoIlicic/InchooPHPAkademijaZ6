@@ -13,13 +13,13 @@
     foreach ($posts as $post):
         ?>
         <p>
-            <a href="<?php echo App::config('url') ?>/Index/view/<?= $post->getId() ?>">
-                <?php echo $post->getContent(); ?>
+            <a href="<?php echo App::config('url') ?>/Index/view/<?= htmlspecialchars($post->getId()) ?>">
+                <?php echo htmlspecialchars($post->getContent()); ?>
             </a>
         </p>
         <?php if($post->getImage()):?>
         <p>
-        <img class='images' src="<?php echo App::config('url') . '/images/' . $post->getImage(); ?>" alt="image">
+        <img class='images' src="<?php echo htmlspecialchars(App::config('url') . '/images/' . $post->getImage()); ?>" alt="image">
         </p><?php
     endif;?>
         <p>
